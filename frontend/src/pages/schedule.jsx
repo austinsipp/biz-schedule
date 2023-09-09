@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react'
 
 
 const Schedule = (currentUser) => {
-    let weekOf = new Date()
-    console.log(weekOf.getDay())
-    weekOf.setDate(weekOf.getDate() - weekOf.getDay())
-    let day = weekOf.getDate()
-    let month = weekOf.getMonth() + 1
-    let year = weekOf.getFullYear()
-    let sundayDate = `${month}-${day}-${year}`
+    let [weeksShifted, setWeeksShifted] = useState(0)
+
+    function weekCalc(weekShift) {
+        let weekOf = new Date() 
+        //console.log(weekOf.getDay())
+        weekOf.setDate(weekOf.getDate() - weekOf.getDay() + (7 * weekShift))
+        let day = weekOf.getDate()
+        let month = weekOf.getMonth() + 1
+        let year = weekOf.getFullYear()
+        return `${month}-${day}-${year}`
+    }
+    let sundayDate = weekCalc(weeksShifted)
 
 
     let [displayWeek, setDisplayWeek] = useState(sundayDate)
@@ -40,10 +45,28 @@ const Schedule = (currentUser) => {
 
     useEffect(() => {
         getSchedule(displayWeek)
-    },[])
-    
+    }, [displayWeek])
+
+    const onPrevWeekSubmit = async (e) => {
+        e.preventDefault()
+        console.log("prev week clicked")
+        setWeeksShifted(weeksShifted - 1)
+        console.log("weeks Shifted = ", weeksShifted)
+        setDisplayWeek(weekCalc(weeksShifted))
+        await getSchedule(weekCalc(weeksShifted))
+    }
+    const onNextWeekSubmit = async (e) => {
+        e.preventDefault()
+        console.log("prev week clicked")
+        setWeeksShifted(weeksShifted + 1)
+        console.log("weeks Shifted = ", weeksShifted)
+        setDisplayWeek(weekCalc(weeksShifted))
+        await getSchedule(weekCalc(weeksShifted))
+    }
+
 
     return <div>
+        <h1>Week of: {displayWeek}</h1>
         {loading ?
             <h1>Loading...</h1>
             :
@@ -52,6 +75,8 @@ const Schedule = (currentUser) => {
                 <h2>{JSON.stringify(displayData)}</h2>
             </div>
         }
+        <button onClick={onPrevWeekSubmit}>Prev</button>
+        <button onClick={onNextWeekSubmit}>Next</button>
     </div>
 }
-    export default Schedule
+export default Schedule
