@@ -13,6 +13,7 @@ import LoginForm from './LoginForm'
 
 function LandingPage() {
     const { currentUser } = useContext(CurrentUser)
+    console.log("current user is ", currentUser)
     
 
     const roleSwitch = () => {
