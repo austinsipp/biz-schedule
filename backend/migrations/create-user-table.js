@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       password_digest: {
-          type: Sequelize.STRING
+        type: Sequelize.STRING
       }
     });
   },
