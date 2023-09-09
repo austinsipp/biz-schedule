@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.SMALLINT,
       primaryKey: true,
       autoIncrement: true
-
     },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,

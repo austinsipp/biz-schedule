@@ -25,7 +25,7 @@ function LandingPage() {
                 />
                 <Route
                     path='/schedule'
-                    element={<Schedule />}
+                    element={<Schedule currentUser={currentUser} />}
                 />
                 <Route
                     path='/ptoRequest'
@@ -48,7 +48,7 @@ function LandingPage() {
                 />
                 <Route
                     path='/schedule'
-                    element={<Schedule />}
+                    element={<Schedule currentUser={currentUser} />}
                 />
                 <Route
                     path='/ptoRequest'
