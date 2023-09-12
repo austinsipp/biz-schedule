@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
             expire_date: ,
             active_session: 'Y'
         })*/
+        /*currently this is susceptible to SQL injection, need to adjust slightly and make the session id not get sent back and check that the hash of the values that create it match, this way no one can put hacking SQL in*/
         await sequelize.query(`insert into public."Sessions" (session_id, user_id, expire_date, active_session) values ('${secureSession}', ${req.session.user_id}, now() + interval '1' hour, 'Y')`)
         //req.session.roles = user.roles
         console.log(user.user_id)

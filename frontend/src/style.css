@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+.scheduleDiv {
+    display: flex;
+}
+
+.calendarBox {
+    flex-grow: 2;
+    border: 2px solid black;
+    /*max-width: 12.5%;*/
+    width: 100%;
+    overflow-wrap: normal;
+    z-index:1;
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.shift {
+    overflow-wrap: normal;
+    flex-basis:auto;
+    flex-direction: row;
+}
+
+.shift table {
+    flex-wrap:wrap;
+}
+
+.arrow {
+    height: 90%;
+    flex-grow: 1;
+    max-width: 6.25%;
+    overflow-wrap: normal;
+}
+
+.manageDataButton {
+    z-index:10;
+}
