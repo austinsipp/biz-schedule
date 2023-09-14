@@ -32,8 +32,9 @@ function LoginForm() {
     }
 
     return (
-        <main>
-            <h1>Login</h1>
+        <main className="loginPageParent">
+            <div className="loginPage">
+            <h1>Welcome to SuperSchedule!</h1>
             {errorMessage !== null
                 ? (
                     <div className="alert alert-danger" role="alert">
@@ -69,8 +70,9 @@ function LoginForm() {
                         />
                     </div>
                 </div>
-                <input className="btn btn-primary" type="submit" value="Login" />
+                <input className="btn btn-primary logonButton" type="submit" value="Login" />
             </form>
+            </div>
         </main>
     )
 }

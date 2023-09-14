@@ -2,11 +2,12 @@
 
 .scheduleDiv {
     display: flex;
+    flex-wrap:wrap;
 }
 
 .calendarBox {
     flex-grow: 2;
-    border: 2px solid black;
+    /*order: 2px solid black;*/
     /*max-width: 12.5%;*/
     width: 100%;
     overflow-wrap: normal;
@@ -14,11 +15,51 @@
     display:flex;
     flex-wrap: wrap;
     flex-direction: row;
+    text-align: center;
+    justify-content:center;
+    background-color:white;
+    margin: 5vh;
+    border-radius:15px;
+    overflow:scroll;
+}
+
+.calendarBox h1 {
+    text-align:center;
+    background-color:#614079;
+    color:white;
+    width:100%;
+    height:20%;
+    line-height:20%;
+    align-items:center;
+    justify-content:center;
+    display:flex;
+    margin:0;
+}
+
+.addform {
+    text-align:center;
+    background-color:#614079;
+    color:white;
+    width:100%;
+    height:20%;
+    line-height:20%;
+    align-items:center;
+    justify-content:center;
+    display:flex;
+}
+.calendarBox .addform .addFormItem {
+    width:100%;
+}
+.controlButton {
+    margin:5px;
+}
+.calendarBox h1 > * {
+    margin:5px;
 }
 
 .shift {
     overflow-wrap: normal;
-    flex-basis:auto;
+    /*flex-basis:auto;*/
     flex-direction: row;
 }
 
@@ -35,4 +76,165 @@
 
 .manageDataButton {
     z-index:10;
+}
+
+.loginPage {
+    background-color:#55C6AE;
+    text-align: center;
+    height: 50vh;
+    font-family: Helvetica;
+    color:#444545;
+    border-radius: 50px;
+    width:100vh;
+    display:flex;
+    align-items:center;
+}
+.loginPageParent {
+    display:flex;
+    background-color:white;
+    text-align: center;
+    height: 100vh;
+    justify-content:center;
+    align-items:center;
+}
+
+.form-group label{
+    padding: 5px;
+    text-align: center;
+}
+.form-group {
+    text-align: center;
+}
+.loginPage h1 {
+    width:100%;
+    flex-grow:1;
+}
+.loginPage form {
+    width:100%;
+    flex-grow:1;
+}
+
+.form-group input {
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.logonButton {
+  align-items: center;
+  background-color: #E4F1F6;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  max-width: 100%;
+  position: relative;
+  text-align: center;
+  width: 15%;
+  margin: 10px;
+}
+
+.navbar {
+    text-align:center;
+    background-color:#55C6AE;
+    height:10vh;
+    vertical-align:middle;
+    line-height: 10vh;
+}
+
+
+.navbar a {
+    display:inline-block;
+    margin: 10px;
+    background-color: #E4F1F6;
+    font-family:Helvetica;
+    color: #3c4043;
+    border-radius: 12px;
+    height: 70%;
+    justify-content:center;
+    text-decoration:none;
+    padding: 3px;
+    line-height:70%;
+}
+
+.navbar a:hover {
+    display:inline-block;
+    margin: 10px;
+    background-color: #D38DFF;
+    font-family:Helvetica;
+    color: #3c4043;
+    border-radius: 12px;
+    height: 70%;
+    justify-content:center;
+    text-decoration:none;
+    padding: 3px;
+    line-height:70%;
+}
+
+.pages {
+    background-color:#C5FCEE;
+    margin-top: 5vh;
+    /*height: 80vh;*/
+}
+
+.styledTable {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styledTable thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+
+.styledTable th,
+.styledTable td {
+    padding: 12px 15px;
+}
+
+.styledTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styledTable tbody tr:nth-of-type(even) {
+    background-color: #C5FCEE;
+}
+
+.styledTable tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+
+.schedulePage {
+    text-align:center;
+    font-family: Helvetica;
+}
+
+.schedulePage h1 {
+    text-align:center;
+    font-size:large;
+}
+
+.schedulePage .weekOf {
+    text-align:center;
+    font-size:large;
+    align-items:center;
+    justify-content:center;
+    display:flex;
+}
+
+
+.schedulePage .weekOf > * {
+    margin:10px;
 }

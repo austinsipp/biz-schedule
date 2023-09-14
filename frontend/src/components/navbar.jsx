@@ -12,36 +12,36 @@ const Navbar = () => {
 
     const roleSwitch = () => {
         if (currentUser.roles.includes('Admin')) {
-            return <div className="container">
-            <Link to='/'>
+            return <div className="navbar">
+            {/*<Link to='/'>
                 <h1>Home</h1>
-            </Link>
+        </Link>*/}
             <Link to='/schedule'>
-                <h1>View Schedule</h1>
-            </Link>
+                <h1>View/Edit Schedule</h1>
+            </Link>{/*
             <Link to='/ptoRequest'>
                 <h1>PTO Request</h1>
             </Link>
             <Link to='/admin'>
                 <h1>Admin</h1>
-            </Link>
+            </Link>*/}
             <Link to='/logout'>
-                <h1>Logout</h1>
+                <h1>Logout from {currentUser.username}</h1>
             </Link>
         </div>
         } else {
-            return <div className="container">
-            <Link to='/'>
+            return <div className="navbar">
+            {/*<Link to='/'>
                 <h1>Home</h1>
-            </Link>
+        </Link>*/}
             <Link to='/schedule'>
                 <h1>View Schedule</h1>
-            </Link>
+            </Link>{/*
             <Link to='/ptoRequest'>
                 <h1>PTO Request</h1>
-            </Link>
+            </Link>*/}
             <Link to='/logout'>
-                <h1>Logout</h1>
+                <h1>Logout from {currentUser.username}</h1>
             </Link>
         </div>
         }

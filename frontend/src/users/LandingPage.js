@@ -26,7 +26,7 @@ function LandingPage() {
                 <Route
                     path='/schedule'
                     element={<Schedule currentUser={currentUser} />}
-                />
+                />{/*}
                 <Route
                     path='/ptoRequest'
                     element={<PTORequest />}
@@ -34,7 +34,7 @@ function LandingPage() {
                 <Route
                     path='/admin'
                     element={<Admin />}
-                />
+        />*/}
                 <Route
                     path='/logout'
                     element={<Logout />}
@@ -49,11 +49,11 @@ function LandingPage() {
                 <Route
                     path='/schedule'
                     element={<Schedule currentUser={currentUser} />}
-                />
+                />{/*}
                 <Route
                     path='/ptoRequest'
                     element={<PTORequest />}
-                />
+        />*/}
                 <Route
                     path='/logout'
                     element={<Logout />}
@@ -67,8 +67,7 @@ function LandingPage() {
             
             {currentUser ?
                 <BrowserRouter>
-                <h1>logged in as {currentUser.first_name}</h1>
-                    <Navbar />
+                    <Navbar firstName={currentUser.first_name}/>
                     <div className="pages">
 
                         {roleSwitch()}
