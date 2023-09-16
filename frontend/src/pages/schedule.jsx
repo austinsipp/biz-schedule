@@ -1,7 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { CurrentUser } from '../contexts/CurrentUser';
 
 
-const Schedule = (currentUser) => {
+const Schedule = () => {
+    const { currentUser } = useContext(CurrentUser)
+    console.log(currentUser)
+    console.log("current user is",currentUser)
+    console.log("current user.roles is",currentUser.roles)
+    
     let [weeksShifted, setWeeksShifted] = useState(0)
 
     function weekCalc(weekShift) {
@@ -156,32 +162,42 @@ const Schedule = (currentUser) => {
                     {displayData.days.map((day) => {
                         return <div className='calendarBox'>
                             {!(shiftBeingAdded === day.day) ?
-                                <h1><strong>{String(day.day)}</strong><span className="material-symbols-outlined controlButton" id={day.day} onClick={onAddClick} >add_circle</span></h1>
+                                <h1><strong>{String(day.day)}</strong>
+                                    {currentUser.roles.includes('Admin') ?
+                                        <span className="material-symbols-outlined controlButton" id={day.day} onClick={onAddClick} >add_circle</span>
+                                        :
+                                        <></>
+                                    }
+                                </h1>
                                 :
                                 <>
                                     <h1><strong>{String(day.day)}</strong></h1>
-                                    <div className="addForm" style={{width:"100%"}}>
-                                        <div className="addFormItem">
-                                            <label htmlFor="name">Name:</label>
-                                            <input type="text" name="name" id="name" onChange={(e) => {
-                                                setAddedRecord({ ...addedRecord, first_name: e.target.value.split(" ", 2)[0], last_name: e.target.value.split(" ", 2)[1] })
-                                            }} />
+                                    {currentUser.roles.includes('Admin') ?
+                                        <div className="addForm" style={{ width: "100%" }}>
+                                            <div className="addFormItem">
+                                                <label htmlFor="name">Name:</label>
+                                                <input type="text" name="name" id="name" onChange={(e) => {
+                                                    setAddedRecord({ ...addedRecord, first_name: e.target.value.split(" ", 2)[0], last_name: e.target.value.split(" ", 2)[1] })
+                                                }} />
+                                            </div>
+                                            <div className="addFormItem">
+                                                <label htmlFor="shiftStart">Shift Start Time (hh:mm military time):</label>
+                                                <input type="text" name="shiftStart" id="shiftStart" onChange={(e) => {
+                                                    setAddedRecord({ ...addedRecord, start_shift: shiftBeingAdded + ' ' + e.target.value + ':00.000000-00' })
+                                                }} />
+                                            </div>
+                                            <div className="addFormItem">
+                                                <label htmlFor="shiftEnd">Shift End Time (hh:mm military time):</label>
+                                                <input type="text" name="shiftEnd" id="shiftEnd" onChange={(e) => {
+                                                    setAddedRecord({ ...addedRecord, end_shift: shiftBeingAdded + ' ' + e.target.value + ':00.000000-00' })
+                                                }} />
+                                            </div>
+                                            <span className="material-symbols-outlined controlButton" id={day.day} onClick={onAddSubmit} >add_task</span>
+                                            <span className="material-symbols-outlined controlButton" id={day.day} onClick={onAddCancel} >cancel</span>
                                         </div>
-                                        <div className="addFormItem">
-                                            <label htmlFor="shiftStart">Shift Start Time (hh:mm military time):</label>
-                                            <input type="text" name="shiftStart" id="shiftStart" onChange={(e) => {
-                                                setAddedRecord({ ...addedRecord, start_shift: shiftBeingAdded + ' ' + e.target.value + ':00.000000-00' })
-                                            }} />
-                                        </div>
-                                        <div className="addFormItem">
-                                            <label htmlFor="shiftEnd">Shift End Time (hh:mm military time):</label>
-                                            <input type="text" name="shiftEnd" id="shiftEnd" onChange={(e) => {
-                                                setAddedRecord({ ...addedRecord, end_shift: shiftBeingAdded + ' ' + e.target.value + ':00.000000-00' })
-                                            }} />
-                                        </div>
-                                        <span className="material-symbols-outlined controlButton" id={day.day} onClick={onAddSubmit} >add_task</span>
-                                        <span className="material-symbols-outlined controlButton" id={day.day} onClick={onAddCancel} >cancel</span>
-                                    </div>
+                                        :
+                                        <></>
+                                    }
                                 </>
                             }
 
@@ -207,8 +223,16 @@ const Schedule = (currentUser) => {
                                                         <td>{element.first_name + ' ' + element.last_name}</td>
                                                         <td>{element.start_shift.substring(11, 16)}</td>
                                                         <td>{element.end_shift.substring(11, 16)}</td>
+                                                        {currentUser.roles.includes('Admin') ? <>
                                                         <td><span className="material-symbols-outlined" id={element.shift_id} passdata={JSON.stringify({ shift_id: element.shift_id, user_id: element.user_id, first_name: element.first_name, last_name: element.last_name, start_shift: element.start_shift, end_shift: element.end_shift, location: element.location, date: day.day })} onClick={onEditPress}>edit</span></td>
                                                         <td><span className="material-symbols-outlined" id={element.shift_id} onClick={handleClickDelete}>delete</span></td>
+                                                        </>
+                                                        :
+                                                        <>
+                                                        <td></td>
+                                                        <td></td>
+                                                        </>
+                                                }
                                                     </tr>
                                                 )
 
@@ -229,8 +253,16 @@ const Schedule = (currentUser) => {
                                                             console.log(editedRecord)
                                                         }
                                                         } /></td>
+                                                        {currentUser.roles.includes('Admin') ? <>
                                                         <td><span className="material-symbols-outlined" id={element.shift_id} onClick={onEditConfirm}>done</span></td>
                                                         <td><span className="material-symbols-outlined" onClick={onCancelClick}>cancel</span></td>
+                                                        </>
+                                                        :
+                                                        <>
+                                                        <td></td>
+                                                        <td></td>
+                                                        </>
+                                                        }
                                                     </tr>
                                             })
                                         }

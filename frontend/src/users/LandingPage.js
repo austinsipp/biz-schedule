@@ -19,13 +19,13 @@ function LandingPage() {
     const roleSwitch = () => {
         if (currentUser.roles.includes('Admin')) {
             return <Routes>
-                <Route
+                {/*<Route
                     path='/'
                     element={<Home />}
-                />
+                />*/}
                 <Route
                     path='/schedule'
-                    element={<Schedule currentUser={currentUser} />}
+                    element={<Schedule />}
                 />{/*}
                 <Route
                     path='/ptoRequest'
@@ -42,13 +42,13 @@ function LandingPage() {
             </Routes>
         } else {
             return <Routes>
-                <Route
+                {/*<Route
                     path='/'
                     element={<Home />}
-                />
+                />*/}
                 <Route
                     path='/schedule'
-                    element={<Schedule currentUser={currentUser} />}
+                    element={<Schedule />}
                 />{/*}
                 <Route
                     path='/ptoRequest'

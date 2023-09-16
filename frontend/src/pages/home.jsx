@@ -1,5 +1,5 @@
 const Home = () => {
-    return <div>This is the homepage</div>
+    return <div>Login successful! Welcome to SuperShcedule! Please click on the tab above corresponding to what you want to do!</div>
 }
 
 export default Home
