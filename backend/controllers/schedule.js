@@ -24,6 +24,7 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/add', async (req, res) => {
+    console.log("request body is:",req.body)
     let user_id_of_request = await User.findOne({
         where: { first_name: req.body.first_name, 
             last_name: req.body.last_name

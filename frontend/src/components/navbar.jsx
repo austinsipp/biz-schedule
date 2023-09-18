@@ -21,10 +21,10 @@ const Navbar = () => {
             </Link>{/*
             <Link to='/ptoRequest'>
                 <h1>PTO Request</h1>
-            </Link>
-            <Link to='/admin'>
-                <h1>Admin</h1>
             </Link>*/}
+            <Link to='/adduser'>
+                <h1>Add User</h1>
+            </Link>
             <Link to='/logout'>
                 <h1>Logout from {currentUser.username}</h1>
             </Link>

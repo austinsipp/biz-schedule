@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useContext } from 'react'
 
 //pages and components
@@ -6,7 +6,7 @@ import Home from '../pages/home'
 import Navbar from '../components/navbar';
 import Schedule from '../pages/schedule';
 import PTORequest from '../pages/ptoRequest';
-import Admin from '../pages/admin';
+import AddUser from '../pages/AddUser';
 import Logout from './Logout';
 import { CurrentUser } from '../contexts/CurrentUser';
 import LoginForm from './LoginForm'
@@ -19,10 +19,10 @@ function LandingPage() {
     const roleSwitch = () => {
         if (currentUser.roles.includes('Admin')) {
             return <Routes>
-                {/*<Route
+                <Route
                     path='/'
-                    element={<Home />}
-                />*/}
+                    element={<Navigate to='/schedule' />}
+                />
                 <Route
                     path='/schedule'
                     element={<Schedule />}
@@ -30,11 +30,11 @@ function LandingPage() {
                 <Route
                     path='/ptoRequest'
                     element={<PTORequest />}
-                />
+                />*/}
                 <Route
-                    path='/admin'
-                    element={<Admin />}
-        />*/}
+                    path='/adduser'
+                    element={<AddUser />}
+                />
                 <Route
                     path='/logout'
                     element={<Logout />}
@@ -42,10 +42,10 @@ function LandingPage() {
             </Routes>
         } else {
             return <Routes>
-                {/*<Route
+                <Route
                     path='/'
-                    element={<Home />}
-                />*/}
+                    element={<Navigate to='/schedule' />}
+                />
                 <Route
                     path='/schedule'
                     element={<Schedule />}

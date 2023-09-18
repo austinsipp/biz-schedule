@@ -5,9 +5,9 @@ import { CurrentUser } from '../contexts/CurrentUser';
 const Schedule = () => {
     const { currentUser } = useContext(CurrentUser)
     console.log(currentUser)
-    console.log("current user is",currentUser)
-    console.log("current user.roles is",currentUser.roles)
-    
+    console.log("current user is", currentUser)
+    console.log("current user.roles is", currentUser.roles)
+
     let [weeksShifted, setWeeksShifted] = useState(0)
 
     function weekCalc(weekShift) {
@@ -29,6 +29,7 @@ const Schedule = () => {
     let [editedRecord, setEditedRecord] = useState({ shift_id: 0, user_id: 0, first_name: '', last_name: '', start_shift: '', end_shift: '', location: '' })
     let [shiftBeingAdded, setShiftBeingAdded] = useState('')
     let [addedRecord, setAddedRecord] = useState({ user_id: 0, first_name: '', last_name: '', start_shift: '', end_shift: '', location: '' })
+    let [userList, setUserList] = useState([])
 
     const getSchedule = async (weekFilter) => {
 
@@ -53,9 +54,29 @@ const Schedule = () => {
         setLoading(false)
     }
 
+    const getEmployees = async () => {
+
+        const response = await fetch('http://localhost:5000/users/retrieveUsers', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+
+        //get the json response
+        const json = await response.json()
+        console.log("userList will be:", typeof json, json)
+        setUserList(json)
+    }
+
     useEffect(() => {
         getSchedule(displayWeek)
     }, [displayWeek])
+
+    useEffect(() => {
+        getEmployees()
+    }, [])
 
     const onPrevWeekSubmit = async (e) => {
         e.preventDefault()
@@ -176,9 +197,14 @@ const Schedule = () => {
                                         <div className="addForm" style={{ width: "100%" }}>
                                             <div className="addFormItem">
                                                 <label htmlFor="name">Name:</label>
-                                                <input type="text" name="name" id="name" onChange={(e) => {
+                                                <select type="text" name="name" id="name" defaultValue=" " required onChange={(e) => {
                                                     setAddedRecord({ ...addedRecord, first_name: e.target.value.split(" ", 2)[0], last_name: e.target.value.split(" ", 2)[1] })
-                                                }} />
+                                                }}>
+                                                    <option  value=" ">Choose Employee</option>
+                                                    {userList.map((employee) => {
+                                                        return <option required value={employee}>{employee}</option>
+                                                    })}
+                                                </select>
                                             </div>
                                             <div className="addFormItem">
                                                 <label htmlFor="shiftStart">Shift Start Time (hh:mm military time):</label>
@@ -224,25 +250,29 @@ const Schedule = () => {
                                                         <td>{element.start_shift.substring(11, 16)}</td>
                                                         <td>{element.end_shift.substring(11, 16)}</td>
                                                         {currentUser.roles.includes('Admin') ? <>
-                                                        <td><span className="material-symbols-outlined" id={element.shift_id} passdata={JSON.stringify({ shift_id: element.shift_id, user_id: element.user_id, first_name: element.first_name, last_name: element.last_name, start_shift: element.start_shift, end_shift: element.end_shift, location: element.location, date: day.day })} onClick={onEditPress}>edit</span></td>
-                                                        <td><span className="material-symbols-outlined" id={element.shift_id} onClick={handleClickDelete}>delete</span></td>
+                                                            <td><span className="material-symbols-outlined" id={element.shift_id} passdata={JSON.stringify({ shift_id: element.shift_id, user_id: element.user_id, first_name: element.first_name, last_name: element.last_name, start_shift: element.start_shift, end_shift: element.end_shift, location: element.location, date: day.day })} onClick={onEditPress}>edit</span></td>
+                                                            <td><span className="material-symbols-outlined" id={element.shift_id} onClick={handleClickDelete}>delete</span></td>
                                                         </>
-                                                        :
-                                                        <>
-                                                        <td></td>
-                                                        <td></td>
-                                                        </>
-                                                }
+                                                            :
+                                                            <>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </>
+                                                        }
                                                     </tr>
                                                 )
 
                                                     :
                                                     <tr key={element.shift_id}>
-                                                        <td><input type="text" defaultValue={element.first_name + ' ' + element.last_name} onChange={(e) => {
+                                                        <td><select type="text" defaultValue={element.first_name + ' ' + element.last_name} onChange={(e) => {
                                                             setEditedRecord({ ...editedRecord, first_name: String(e.target.value.split(" ", 2)[0]), last_name: String(e.target.value.split(" ", 2)[1]) })
                                                             console.log(editedRecord)
                                                         }
-                                                        } /></td>
+                                                        }>
+                                                            {userList.map((employee) => {
+                                                                return <option value={employee}>{employee}</option>
+                                                            })}
+                                                        </select></td>
                                                         <td><input type="text" defaultValue={element.start_shift.substring(11, 16)} onChange={(e) => {
                                                             setEditedRecord({ ...editedRecord, start_shift: String(e.target.value) })
                                                             console.log(editedRecord)
@@ -254,14 +284,14 @@ const Schedule = () => {
                                                         }
                                                         } /></td>
                                                         {currentUser.roles.includes('Admin') ? <>
-                                                        <td><span className="material-symbols-outlined" id={element.shift_id} onClick={onEditConfirm}>done</span></td>
-                                                        <td><span className="material-symbols-outlined" onClick={onCancelClick}>cancel</span></td>
+                                                            <td><span className="material-symbols-outlined" id={element.shift_id} onClick={onEditConfirm}>done</span></td>
+                                                            <td><span className="material-symbols-outlined" onClick={onCancelClick}>cancel</span></td>
                                                         </>
-                                                        :
-                                                        <>
-                                                        <td></td>
-                                                        <td></td>
-                                                        </>
+                                                            :
+                                                            <>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </>
                                                         }
                                                     </tr>
                                             })

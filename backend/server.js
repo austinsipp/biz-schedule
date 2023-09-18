@@ -33,6 +33,7 @@ app.use('/authentication',require('./controllers/authentication'))
 */
 app.use('/authentication',require('./controllers/authentication'))
 app.use('/schedule',require('./controllers/schedule'))
+app.use('/users',require('./controllers/users'))
 
 // Listen for Connections
 app.listen(process.env.PORT, () => {
