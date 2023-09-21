@@ -6,6 +6,17 @@ const { sequelize } = require('../models')
 
 const { User } = db
 
+/*
+This route gets used to pull all the employees available to be
+assigned a shift, i.e. any employee in the users table. The frontend
+needs this in order to make the dropdown field options for when
+the admin is trying to add or edit shifts. We want to only allow
+real employees to be able to be submitted from the frontend, so
+we need the backend to tell the frontend what all the names of 
+those employees are. Then put it in a drop down so the admin
+does not need to type the employee name into an input box
+perfectly.
+*/
 router.get('/retrieveUsers', async (req,res) => {
     console.log("attempting to retrieve users")
     await User.findAll()
@@ -24,7 +35,10 @@ router.get('/retrieveUsers', async (req,res) => {
 
 
 
-
+/*
+This is where an admin can add a new user, by posting to this route with 
+all the necessary fields in the request body.
+*/
 router.post('/add', async (req,res) => {
     console.log("new user request is:",req.body)
     try {

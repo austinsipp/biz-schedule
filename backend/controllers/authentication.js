@@ -6,6 +6,34 @@ const { sequelize } = require('../models')
 
 const { User, Session } = db
 
+
+/*
+This route is for verifying the username and password 
+combination given by a user on the login screen.
+It checks the user table and finds the record with
+the encrypted password that matches that username. Then
+using bcrypt it compares the given password to the 
+encrypted password. It does this by taking the salt
+from the encrypted password_digest, then adding it to
+the user submitted password and hashing this combo to 
+see if it matches the password_digest.
+
+It also starts the cookie session, which gets sent back 
+to the frontend and is stored in the browsers cookies. 
+This stores some data, like the username that then 
+persists for 2 hours on the frontend. However, I found
+that doing this there was no way for a user to safely 
+logout, they woudl simply have to wait for their cookie 
+to expire. This is why it also creates a record in the
+Sessions table, with an expiration date and a flag for
+session validity. To implement logout, I had to 
+change the flag for the user's session in this backend
+table. That way, even though they have a valid cookie
+they still get rejected because the backend is tracking
+their session, so I can simply invalidate their session
+and they will have safely logged off.
+*/
+
 router.post('/', async (req, res) => {
     let user = await User.findOne({
         where: { username: req.body.username }
@@ -34,6 +62,21 @@ router.post('/', async (req, res) => {
 
 })
 
+
+/*
+This route gets hit by the context provider on the 
+frontend. Every page change basically on the frontend
+has the useEffect instruction to check the profile from
+the session with this route to provide this to
+the context for all the components on the frontend.
+
+The important thing to note is that it checks both
+that the user id from the session cookie is valid
+but also the backend session tracking table must
+have a valid session. This is how the logout 
+knows that there is not a valid session, thus
+logging the user out
+*/
 router.get('/profile', async (req, res) => {
     //console.log("session user id from /profile path get request",req.session.userId)
     console.log("made it here")
@@ -58,7 +101,15 @@ router.get('/profile', async (req, res) => {
     //res.json(req.currentUser)
 })
 
-
+/*
+This is the route that gets used when a user confirms 
+that they want to logout. It simply updatesd the backend
+session to be no longer an active session. This way,
+even though the user's browser will still have a 
+valid cookie session running, this second check from 
+the sessions table will fail and they will be logged
+out if they have hit this route and cause that flag to update.
+*/
 router.post('/logout', async (req, res) => {
     console.log(req.session)
     console.log("logging out")

@@ -12,6 +12,10 @@ function LoginForm() {
 
     const [errorMessage, setErrorMessage] = useState(null)
 
+    /*
+    when user submits username and password, this route checks it against the database and creates a 
+    cookie session, and a backend record in the session table. 
+    */
     async function handleSubmit(e) {
         e.preventDefault()
         const response = await fetch('http://localhost:5000/authentication/', {

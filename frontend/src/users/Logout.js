@@ -8,6 +8,15 @@ function Logout() {
 
     const [errorMessage, setErrorMessage] = useState(null)
 
+    /*
+    the mechanism by which the user logs out is that this route is hit, and
+    the record in the sessions table in the backend get flagged as no longer
+    an active session. This makes all the other areas where the credentials
+    are being checked show as invalid. This is how the log out works. If we 
+    didn't have this backed Sessions table tracking whether there was a
+    valid session, the only way for a user to log out would be to wait for 
+    their cookie to expire, which is not ideal.
+    */
     async function handleSubmit(e) {
         e.preventDefault()
         const response = await fetch('http://localhost:5000/authentication/logout', {

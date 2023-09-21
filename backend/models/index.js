@@ -10,11 +10,25 @@ const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;
+
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+//sequelize = new Sequelize(process.env.EXTERNAL_CONNECTOR);
+//sequelize = new Sequelize("postgres://postgresadmin:jWhngMNVCmVIvnbdxoEHHm92zl1HN7An@dpg-ck55np6ru70s738j9ic0-a.oregon-postgres.render.com/bizservices?ssl=true")
+
+/*
+sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: 'postgres',
+  port: 5432,
+  ssl: true
+})*/
+
+
 
 fs
   .readdirSync(__dirname)

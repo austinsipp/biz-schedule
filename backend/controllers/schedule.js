@@ -5,7 +5,15 @@ const db = require("../models")
 const { Schedule, User } = db
 
 
+/*
+This route is for pulling the current displayed week of data from 
+the database. Each time the user changes this on the frontend,
+this route gets hit with a new date in the request body, so different
+data gets sent back for the different week.
 
+It also pulls the list of days by date in the week, which gets used
+to label the date in each date window.
+*/
 router.post('/', async (req, res) => {
     let shifts = await sequelize.query(`
     select * 
@@ -23,6 +31,12 @@ router.post('/', async (req, res) => {
     res.json(response)
 })
 
+/*
+This route will add a shift to the schedule table. The first step
+is to check the employee given in the request body to get their
+user_id, which is required to insert into the schedule table.
+Then it gets inserted into the table.
+*/
 router.post('/add', async (req, res) => {
     console.log("request body is:",req.body)
     let user_id_of_request = await User.findOne({
@@ -48,6 +62,13 @@ router.post('/add', async (req, res) => {
     res.json(response)
 })
 
+
+/*
+This route is used for modifying shifts in the schedule table. It 
+uses the fields in the request body to update. Note, the user cannot 
+on the frontend modify the shift_id, so that field is how we know
+which shift is begin edited.
+*/
 router.patch('/', async (req, res) => {
     console.log("request body",req.body)
     let response = await sequelize.query(`
@@ -72,6 +93,11 @@ router.patch('/', async (req, res) => {
     res.json(response)
 })
 
+
+/*
+This one is pretty straightforward, deleting a shift from the schedule table.
+Sequelize uses the .destroy method for this.
+*/
 router.delete('/:id', async (req,res) => {
     const {id} = req.params
     let deletedRecord = await Schedule.destroy({

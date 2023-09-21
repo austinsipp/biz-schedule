@@ -15,7 +15,13 @@ function LandingPage() {
     const { currentUser } = useContext(CurrentUser)
     console.log("current user is ", currentUser)
     
-
+    /*
+    This matches the navbar, not only do we want the navbar to only display the right links to the user,
+    we want only certain routes to even be available to each user based on their role. Admins have access
+    to the add user tab. We wouldnt want a non-admin to be able to get to that tab by simply typing it in 
+    their address bar, so it wasnt enough to simply display only the right links in the navbar, we also
+    needed to replicate that logic here, to make only certain routes available to regular users
+    */
     const roleSwitch = () => {
         if (currentUser.roles.includes('Admin')) {
             return <Routes>

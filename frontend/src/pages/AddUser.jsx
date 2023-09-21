@@ -1,10 +1,14 @@
 import { useState } from 'react'
 
 const AddUser = () => {
-    let [addedUser, setAddedUser] = useState({ first_name: '', last_name: '', roles: '', username: '', password: '' })
-    let [requestSent, setRequestSent] = useState(false)
-    let [messageDisplayed, setMessageDisplayed] = useState('')
+    let [addedUser, setAddedUser] = useState({ first_name: '', last_name: '', roles: '', username: '', password: '' })/*declare state variable to store user input from the form*/
+    let [requestSent, setRequestSent] = useState(false)/*this flag is used to control whether the success/failure message gets displayed, i.e., whether the form has been submitted yet*/
+    let [messageDisplayed, setMessageDisplayed] = useState('')/*this stores the message that gets displayed, will say success or error*/
 
+
+    /*
+    Fetch the route to add the user with the addedUser info in the body
+    */
     const onAddUserSubmit = async () => {
         console.log(addedUser)
         const response = await fetch('http://localhost:5000/users/add', {
@@ -31,7 +35,12 @@ const AddUser = () => {
 
 
 
-    return requestSent ?
+    return requestSent ?/*ternary operator, if the request has been sent (really in this case meaning 
+                        that the request was sent and we have the response, whether success or failure)
+                        then display the message, otherwise display the form. Instead of having this 
+                        requestSent boolean, I couldve done if messageDisplayed ='', meaning there was 
+                        no message because there has been no response yet, but decided to have this second 
+                        variable to make it more clear*/
         <div>
             <p>{messageDisplayed}</p>
         </div>
