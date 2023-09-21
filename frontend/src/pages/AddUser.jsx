@@ -60,7 +60,7 @@ const AddUser = () => {
             }}>
                 <option value=" ">Choose Role</option>
                 <option value="Admin">Admin</option>
-                <option value="Non-Admin">Non-Admin</option>
+                <option value="Regular">Non-Admin</option>
             </select>
             <label>Username: </label>
             <input type='text' onChange={(e) => {
